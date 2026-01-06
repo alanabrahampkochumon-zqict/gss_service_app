@@ -4,23 +4,10 @@ import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
 import java.util.Random;
-import java.util.concurrent.atomic.AtomicReference;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class ContactTest {
-
-    private static Contact contact;
-
-    private static String validFirstName = "";
-    private static String longFirstName = "";
-
-    private static String[] validLastNames = {"Last Name", "Last"};
-    private static String[] invalidLastName = {"InvalidLastName"};
-
-    private static String[] validPhoneNumbers = {"7773167773", "123457890", "9881281238"};
-    private static String[] invalidPhoneNumbers = {"1234", "8", "12341234111", "98881888888"};
-
 
     @Test
     @Tag("FirstName")
@@ -30,9 +17,13 @@ class ContactTest {
         for (byte i = 0; i < limit; i++) {
             firstName.append("a");
         }
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Contact("001", firstName.toString(), "Last Name", "1234567890", "Some Address");
-        });
+        assertThrows(IllegalArgumentException.class, () -> new Contact("001", firstName.toString(), "Last Name", "1234567890", "Some Address"));
+    }
+
+    @Test
+    @Tag("FirstName")
+    void firstName_null_throwsException() {
+        assertThrows(IllegalArgumentException.class, () -> new Contact("001", null, "Last Name", "1234567890", "Some Address"));
     }
 
     @Test
@@ -44,9 +35,7 @@ class ContactTest {
         for (byte i = 0; i < limit; i++) {
             firstName.append("a");
         }
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Contact("001", firstName.toString(), "Last Name", "1234567890", "Some Address");
-        });
+        assertThrows(IllegalArgumentException.class, () -> new Contact("001", firstName.toString(), "Last Name", "1234567890", "Some Address"));
     }
 
     @Test
@@ -61,15 +50,19 @@ class ContactTest {
 
     @Test
     @Tag("LastName")
+    void lastName_null_throwsException() {
+        assertThrows(IllegalArgumentException.class, () -> new Contact("001", "First Name", null, "1234567890", "Some Address"));
+    }
+
+    @Test
+    @Tag("LastName")
     void lastName_oneCharacterAboveLimit_throwsException() {
         StringBuilder lastName = new StringBuilder();
         byte limit = Contact.LAST_NAME_MAX_LENGTH + 1;
         for (byte i = 0; i < limit; i++) {
             lastName.append("a");
         }
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Contact("001", "First Name", lastName.toString(), "1234567890", "Some Address");
-        });
+        assertThrows(IllegalArgumentException.class, () -> new Contact("001", "First Name", lastName.toString(), "1234567890", "Some Address"));
     }
 
     @Test
@@ -81,9 +74,7 @@ class ContactTest {
         for (byte i = 0; i < limit; i++) {
             lastName.append("a");
         }
-        assertThrows(IllegalArgumentException.class, () -> {
-            new Contact("001", "First Name", lastName.toString(), "1234567890", "Some Address");
-        });
+        assertThrows(IllegalArgumentException.class, () -> new Contact("001", "First Name", lastName.toString(), "1234567890", "Some Address"));
     }
 
     @Test
@@ -94,6 +85,18 @@ class ContactTest {
             Contact contact = new Contact("001", "First Name", lastName, "1234567890", "Some Address");
             assertEquals(lastName, contact.getLastName());
         }
+    }
+
+    @Test
+    @Tag("PhoneNumber")
+    void phoneNumber_null_throwsException() {
+        assertThrows(IllegalArgumentException.class, () -> new Contact("001", "First Name", "Last Number", null, "Some Address"));
+    }
+
+    @Test
+    @Tag("PhoneNumber")
+    void phoneNumber_notDigits_throwsException() {
+        assertThrows(IllegalArgumentException.class, () -> new Contact("001", "First Name", "Last Number", "a".repeat(Contact.PHONE_NUMBER_MAX_LENGTH), "Some Address"));
     }
 
     @Test
@@ -128,13 +131,18 @@ class ContactTest {
 
     @Test
     @Tag("Address")
+    void address_null_throwsException() {
+        assertThrows(IllegalArgumentException.class, () -> new Contact("001", "First Name", "Last Name","1234567890", null));
+    }
+
+    @Test
+    @Tag("Address")
     void address_greaterThanLimit_throwsException() {
-        StringBuilder addresss = new StringBuilder();
+        StringBuilder address = new StringBuilder();
         Random random = new Random();
         int limit = random.nextInt(25) + Contact.ADDRESS_MAX_LENGTH + 1; // Bound between 1 and 26 character above address limit
-        addresss.append("a".repeat(limit));
-        assertThrows(IllegalArgumentException.class, () -> new Contact("001", "First Name", "Last Name","1234567890", addresss.toString() ));
-
+        address.append("a".repeat(limit));
+        assertThrows(IllegalArgumentException.class, () -> new Contact("001", "First Name", "Last Name","1234567890", address.toString() ));
     }
 
     @Test
@@ -150,13 +158,18 @@ class ContactTest {
 
     @Test
     @Tag("ID")
+    void id_null_throwsException() {
+        assertThrows(IllegalArgumentException.class, () -> new Contact(null, "First Name", "Last Name","1234567890", "Some Address"));
+    }
+
+    @Test
+    @Tag("ID")
     void id_greaterThanLimit_throwsException() {
         StringBuilder id = new StringBuilder();
         Random random = new Random();
         int limit = random.nextInt(25) + Contact.ID_MAX_LENGTH + 1; // Bound between 1 and 26 character above address limit
         id.append("0".repeat(limit));
         assertThrows(IllegalArgumentException.class, () -> new Contact(id.toString(), "First Name", "Last Name","1234567890", "Some Address"));
-
     }
 
     @Test
