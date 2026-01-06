@@ -26,6 +26,13 @@ public class Contact {
 
 
     public Contact(String id, String firstName, String lastName, String phoneNumber, String address) {
+        setFirstName(firstName);
+    }
+
+    public void setFirstName(String firstName) throws IllegalArgumentException {
+        if (firstName.length() > FIRST_NAME_MAX_LENGTH)
+            throw new IllegalArgumentException("First Name cannot exceed " + FIRST_NAME_MAX_LENGTH + ".");
+        this.firstName = firstName;
     }
 
     public String getAddress() {
@@ -56,9 +63,7 @@ public class Contact {
         return firstName;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
+
 
     public String getId() {
         return id;
