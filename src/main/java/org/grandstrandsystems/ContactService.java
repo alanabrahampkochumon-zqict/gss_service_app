@@ -12,9 +12,9 @@ package org.grandstrandsystems;
 
 public class ContactService {
 
-    private static final byte ID_MAX_LENGTH = 10;
-    private static final byte FIRST_NAME_MAX_LENGTH = 10;
-    private static final byte LAST_NAME_MAX_LENGTH = 10;
+    static final byte ID_MAX_LENGTH = 10;
+    static final byte FIRST_NAME_MAX_LENGTH = 10;
+    static final byte LAST_NAME_MAX_LENGTH = 10;
     private static final byte PHONE_NUMBER_MAX_LENGTH = 10;
     private static final byte ADDRESS_MAX_LENGTH = 30;
 
