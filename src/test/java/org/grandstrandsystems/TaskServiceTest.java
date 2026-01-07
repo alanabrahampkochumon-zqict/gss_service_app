@@ -103,6 +103,13 @@ class TaskServiceTest {
 
     @Test
     @Tag("UpdateTask")
+    void updateTaskName_nonExistentId_throwsException() {
+        // We don't add any task to the service, so "001" won't exist
+        assertThrows(IllegalArgumentException.class, () -> service.updateName("001", "New Name"));
+    }
+
+    @Test
+    @Tag("UpdateTask")
     void updateTaskDescription_validIdValidDescription_updatesDescription() {
         Task task = new Task(ID, NAME, DESCRIPTION);
         String updatedDescription = "Updated Description";
@@ -134,6 +141,13 @@ class TaskServiceTest {
         String invalidDescription = "A".repeat(Task.MAX_DESCRIPTION_LENGTH + 5);
         service.addTask(task);
         assertThrows(IllegalArgumentException.class, () -> service.updateDescription(task.getId(), invalidDescription));
+    }
+
+    @Test
+    @Tag("UpdateTask")
+    void updateTaskDescription_nonExistentId_throwsException() {
+        // We don't add any task to the service, so "001" won't exist
+        assertThrows(IllegalArgumentException.class, () -> service.updateDescription("001", "New Description"));
     }
 
     private void assertTaskEquals(Task expected, Task actual) {

@@ -96,7 +96,7 @@ class ContactTest {
     @Test
     @Tag("PhoneNumber")
     void phoneNumber_notDigits_throwsException() {
-        assertThrows(IllegalArgumentException.class, () -> new Contact("001", "First Name", "Last Number", "a".repeat(Contact.PHONE_NUMBER_MAX_LENGTH), "Some Address"));
+        assertThrows(IllegalArgumentException.class, () -> new Contact("a123456789", "First Name", "Last Number", "a".repeat(Contact.PHONE_NUMBER_MAX_LENGTH), "Some Address"));
     }
 
     @Test

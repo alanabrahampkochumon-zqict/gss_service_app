@@ -153,7 +153,7 @@ public class Contact {
     public void setPhoneNumber(String phoneNumber) {
         // Regex \d{10} ensures the string contains exactly 10 numeric digits
         if (phoneNumber == null || !phoneNumber.matches("\\d{10}")) {
-            throw new IllegalArgumentException("Phone Number must be exactly " + PHONE_NUMBER_MAX_LENGTH + " digits.");
+            throw new IllegalArgumentException("Phone number must be exactly " + PHONE_NUMBER_MAX_LENGTH + " digits.");
         }
         this.phoneNumber = phoneNumber;
     }
