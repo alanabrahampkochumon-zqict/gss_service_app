@@ -1,6 +1,7 @@
 package org.grandstrandsystems;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 
@@ -29,53 +30,59 @@ class AppointmentServiceTest {
         service = new AppointmentService();
     }
 
-    @Test
-    @Tag("AddAppointment")
-    void addAppointment_null_throwsException() {
-        assertThrows(IllegalArgumentException.class, () -> service.addAppointment(null));
+    @Nested
+    class AddAppointmentTests {
+        @Test
+        @Tag("AddAppointment")
+        void addAppointment_null_throwsException() {
+            assertThrows(IllegalArgumentException.class, () -> service.addAppointment(null));
+        }
+
+        @Test
+        @Tag("AddAppointment")
+        void addAppointment_validAppointment_addsAppointment() {
+            Appointment appointment = new Appointment(ID, validDate, DESCRIPTION);
+            service.addAppointment(appointment);
+            Appointment retrieved = service.getAppointment(appointment.getId());
+            assertAppointmentEquals(appointment, retrieved);
+        }
+
+
+        @Test
+        @Tag("AddAppointment")
+        void addAppointment_duplicateAppointment_throwsException() {
+            Appointment appointment = new Appointment(ID, validDate, DESCRIPTION);
+            service.addAppointment(appointment);
+            assertThrows(IllegalArgumentException.class, () -> service.addAppointment(appointment));
+        }
     }
 
-    @Test
-    @Tag("AddAppointment")
-    void addAppointment_validAppointment_addsAppointment() {
-        Appointment appointment = new Appointment(ID, validDate, DESCRIPTION);
-        service.addAppointment(appointment);
-        Appointment retrieved = service.getAppointment(appointment.getId());
-        assertAppointmentEquals(appointment, retrieved);
-    }
+    @Nested
+    class DeleteAppointmentTests {
+        @Test
+        @Tag("DeleteAppointment")
+        void deleteAppointment_nullId_throwsException() {
+            assertThrows(IllegalArgumentException.class, () -> service.deleteAppointment(null));
+        }
 
+        @Test
+        @Tag("DeleteAppointment")
+        void deleteAppointment_nonExistent_throwsException() {
+            assertThrows(IllegalArgumentException.class, () -> service.deleteAppointment(ID));
+        }
 
-    @Test
-    @Tag("AddAppointment")
-    void addAppointment_duplicateAppointment_throwsException() {
-        Appointment appointment = new Appointment(ID, validDate, DESCRIPTION);
-        service.addAppointment(appointment);
-        assertThrows(IllegalArgumentException.class, () -> service.addAppointment(appointment));
-    }
+        @Test
+        @Tag("DeleteAppointment")
+        void deleteAppointment_validAppointment_deletesAppointment() {
+            Appointment appointment = new Appointment(ID, validDate, DESCRIPTION);
+            service.addAppointment(appointment);
 
-    @Test
-    @Tag("DeleteAppointment")
-    void deleteAppointment_nullId_throwsException() {
-        assertThrows(IllegalArgumentException.class, () -> service.deleteAppointment(null));
-    }
+            assertAppointmentEquals(appointment, service.getAppointment(appointment.getId()));
 
-    @Test
-    @Tag("DeleteAppointment")
-    void deleteAppointment_nonExistent_throwsException() {
-        assertThrows(IllegalArgumentException.class, () -> service.deleteAppointment(ID));
-    }
+            service.deleteAppointment(appointment.getId());
 
-    @Test
-    @Tag("DeleteAppointment")
-    void deleteAppointment_validAppointment_deletesAppointment() {
-        Appointment appointment = new Appointment(ID, validDate, DESCRIPTION);
-        service.addAppointment(appointment);
-
-        assertAppointmentEquals(appointment, service.getAppointment(appointment.getId()));
-
-        service.deleteAppointment(appointment.getId());
-
-        assertNull(service.getAppointment(appointment.getId()));
+            assertNull(service.getAppointment(appointment.getId()));
+        }
     }
 
     void assertAppointmentEquals(Appointment expected, Appointment actual) {

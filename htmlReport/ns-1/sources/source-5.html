@@ -1,0 +1,233 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Task</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.grandstrandsystems</a>
+</div>
+
+<h1>Coverage Summary for Class: Task (org.grandstrandsystems)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Task</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (14/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (18/18)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.grandstrandsystems;
+&nbsp;
+&nbsp;/**
+&nbsp; * Represents a specific task within the project management system.
+&nbsp; * &lt;p&gt;
+&nbsp; * This class stores task details including a unique ID, a name, and a description.
+&nbsp; * It enforces strict validation rules ensuring that no fields are null and that all
+&nbsp; * fields adhere to specific character length constraints.
+&nbsp; * &lt;/p&gt;
+&nbsp; *
+&nbsp; * @author Alan Abraham
+&nbsp; * @version 1.0
+&nbsp; * @since 1/6/2026
+&nbsp; */
+&nbsp;public class Task {
+&nbsp;
+&nbsp;    // Validation Constants
+&nbsp;    static final byte MAX_ID_LENGTH = 10;
+&nbsp;    static final byte MAX_NAME_LENGTH = 20;
+&nbsp;    static final byte MAX_DESCRIPTION_LENGTH = 50;
+&nbsp;
+&nbsp;    private String id;
+&nbsp;    private String name;
+&nbsp;    private String description;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a new Task object.
+&nbsp;     * &lt;p&gt;
+&nbsp;     * All parameters are validated upon instantiation. The unique Task ID is immutable
+&nbsp;     * once set during this constructor call.
+&nbsp;     * &lt;/p&gt;
+&nbsp;     *
+&nbsp;     * @param id          The unique task ID (max 10 characters, not null, not updatable).
+&nbsp;     * @param name        The task name (max 20 characters, not null).
+&nbsp;     * @param description The task description (max 50 characters, not null).
+&nbsp;     * @throws IllegalArgumentException if any parameter is null or violates length constraints.
+&nbsp;     */
+<b class="fc">&nbsp;    public Task(String id, String name, String description) {</b>
+<b class="fc">&nbsp;        setId(id);</b>
+<b class="fc">&nbsp;        setName(name);</b>
+<b class="fc">&nbsp;        setDescription(description);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the unique Task ID.
+&nbsp;     *
+&nbsp;     * @return The task ID string.
+&nbsp;     */
+&nbsp;    public String getId() {
+<b class="fc">&nbsp;        return id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the task name.
+&nbsp;     *
+&nbsp;     * @return The task name string.
+&nbsp;     */
+&nbsp;    public String getName() {
+<b class="fc">&nbsp;        return name;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the task description.
+&nbsp;     *
+&nbsp;     * @return The task description string.
+&nbsp;     */
+&nbsp;    public String getDescription() {
+<b class="fc">&nbsp;        return description;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sets the unique Task ID.
+&nbsp;     * &lt;p&gt;
+&nbsp;     * &lt;b&gt;Note:&lt;/b&gt; The ID can only be set once (during instantiation). Attempting
+&nbsp;     * to call this method on an object that already has an ID will throw an exception.
+&nbsp;     * &lt;/p&gt;
+&nbsp;     *
+&nbsp;     * @param id The unique ID string.
+&nbsp;     * @throws IllegalArgumentException if ID is null, exceeds 10 characters, or is already set.
+&nbsp;     */
+&nbsp;    public void setId(String id) {
+<b class="fc">&nbsp;        if (id == null || id.length() &gt; MAX_ID_LENGTH) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Id cannot be null or longer than &quot; + MAX_ID_LENGTH + &quot; characters.&quot;);</b>
+&nbsp;        }
+&nbsp;        // Enforce immutability
+<b class="fc">&nbsp;        if (this.id != null) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Cannot change ID once it is set.&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        this.id = id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sets the task name.
+&nbsp;     *
+&nbsp;     * @param name The name string.
+&nbsp;     * @throws IllegalArgumentException if name is null or exceeds 20 characters.
+&nbsp;     */
+&nbsp;    public void setName(String name) {
+<b class="fc">&nbsp;        if (name == null || name.length() &gt; MAX_NAME_LENGTH) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Name cannot be null or longer than &quot; + MAX_NAME_LENGTH + &quot; characters.&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        this.name = name;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sets the task description.
+&nbsp;     *
+&nbsp;     * @param description The description string.
+&nbsp;     * @throws IllegalArgumentException if description is null or exceeds 50 characters.
+&nbsp;     */
+&nbsp;    public void setDescription(String description) {
+<b class="fc">&nbsp;        if (description == null || description.length() &gt; MAX_DESCRIPTION_LENGTH) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Description cannot be null or longer than &quot; + MAX_DESCRIPTION_LENGTH + &quot; characters.&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        this.description = description;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-01-08 05:51</div>
+</div>
+</body>
+</html>
