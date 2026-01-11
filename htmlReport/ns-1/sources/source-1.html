@@ -1,0 +1,248 @@
+
+
+
+<!DOCTYPE html>
+<html id="htmlId">
+<head>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8"> 
+  <title>Coverage Report > Appointment</title>
+  <style type="text/css">
+    @import "../../css/coverage.css";
+    @import "../../css/idea.min.css";
+  </style>
+  <script type="text/javascript" src="../../js/highlight.min.js"></script>
+  <script type="text/javascript" src="../../js/highlightjs-line-numbers.min.js"></script>
+</head>
+
+<body>
+<div class="content">
+<div class="breadCrumbs">
+Current scope:     <a href="../../index.html">all classes</a>
+    <span class="separator">|</span>
+    <a href="../index.html">org.grandstrandsystems</a>
+</div>
+
+<h1>Coverage Summary for Class: Appointment (org.grandstrandsystems)</h1>
+
+<table class="coverageStats">
+<tr>
+  <th class="name">Class</th>
+<th class="coverageStat 
+">
+  Class, %
+</th>
+<th class="coverageStat 
+">
+  Method, %
+</th>
+<th class="coverageStat 
+">
+  Branch, %
+</th>
+<th class="coverageStat 
+">
+  Line, %
+</th>
+</tr>
+<tr>
+  <td class="name">Appointment</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (1/1)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (7/7)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (14/14)
+  </span>
+</td>
+<td class="coverageStat">
+  <span class="percent">
+    100%
+  </span>
+  <span class="absValue">
+    (20/20)
+  </span>
+</td>
+</tr>
+
+</table>
+
+<br/>
+<br/>
+
+
+<pre>
+<code class="sourceCode" id="sourceCode">&nbsp;package org.grandstrandsystems;
+&nbsp;
+&nbsp;import java.util.Date;
+&nbsp;
+&nbsp;/**
+&nbsp; * Represents an appointment within the system.
+&nbsp; * &lt;p&gt;
+&nbsp; * This class stores appointment details including a unique ID, a specific date, and a description.
+&nbsp; * It enforces strict validation rules ensuring data integrity, such as preventing appointments
+&nbsp; * in the past and enforcing character limits.
+&nbsp; * &lt;/p&gt;
+&nbsp; *
+&nbsp; * @author Alan Abraham
+&nbsp; * @version 1.0
+&nbsp; * @since 1/7/2026
+&nbsp; */
+&nbsp;public class Appointment {
+&nbsp;
+&nbsp;    // Constants for validation limits
+&nbsp;    static final byte ID_MAX_LENGTH = 10;
+&nbsp;    static final byte DESCRIPTION_MAX_LENGTH = 50;
+&nbsp;
+&nbsp;    private String id;
+&nbsp;    private Date date;
+&nbsp;    private String description;
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Constructs a new Appointment object.
+&nbsp;     * &lt;p&gt;
+&nbsp;     * All parameters are validated upon instantiation. The unique Appointment ID is immutable
+&nbsp;     * once set during this constructor call.
+&nbsp;     * &lt;/p&gt;
+&nbsp;     *
+&nbsp;     * @param id          The unique appointment ID (max 10 characters, not null, not updatable).
+&nbsp;     * @param date        The appointment date (must not be null and must be in the future).
+&nbsp;     * @param description The appointment description (max 50 characters, not null).
+&nbsp;     * @throws IllegalArgumentException if any parameter violates validation rules.
+&nbsp;     */
+<b class="fc">&nbsp;    public Appointment(String id, Date date, String description) {</b>
+<b class="fc">&nbsp;        setId(id);</b>
+<b class="fc">&nbsp;        setDate(date);</b>
+<b class="fc">&nbsp;        setDescription(description);</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /*
+&nbsp;     * *******************************************
+&nbsp;     * * GETTERS                   *
+&nbsp;     * *******************************************
+&nbsp;     */
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the unique Appointment ID.
+&nbsp;     *
+&nbsp;     * @return The appointment ID string.
+&nbsp;     */
+&nbsp;    public String getId() {
+<b class="fc">&nbsp;        return id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the appointment date.
+&nbsp;     *
+&nbsp;     * @return The Date object representing the appointment time.
+&nbsp;     */
+&nbsp;    public Date getDate() {
+<b class="fc">&nbsp;        return date;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Retrieves the appointment description.
+&nbsp;     *
+&nbsp;     * @return The description string.
+&nbsp;     */
+&nbsp;    public String getDescription() {
+<b class="fc">&nbsp;        return description;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /*
+&nbsp;     * *******************************************
+&nbsp;     * * SETTERS                   *
+&nbsp;     * *******************************************
+&nbsp;     */
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sets the unique Appointment ID.
+&nbsp;     * &lt;p&gt;
+&nbsp;     * &lt;b&gt;Note:&lt;/b&gt; The ID can only be set once (during instantiation). Attempting
+&nbsp;     * to call this method on an object that already has an ID will throw an exception.
+&nbsp;     * &lt;/p&gt;
+&nbsp;     *
+&nbsp;     * @param id The unique ID string.
+&nbsp;     * @throws IllegalArgumentException if ID is null, exceeds 10 characters, or is already set.
+&nbsp;     */
+&nbsp;    public void setId(String id) {
+<b class="fc">&nbsp;        if (id == null || id.length() &gt; ID_MAX_LENGTH) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Appointment ID cannot be null or more than &quot; + ID_MAX_LENGTH + &quot; characters.&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (this.id != null) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Appointment ID cannot be changed after initialization.&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        this.id = id;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sets the appointment date.
+&nbsp;     *
+&nbsp;     * @param date The Date object.
+&nbsp;     * @throws IllegalArgumentException if the date is null or in the past.
+&nbsp;     */
+&nbsp;    public void setDate(Date date) {
+<b class="fc">&nbsp;        if (date == null) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Appointment Date cannot be null.&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        if (date.before(new Date())) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Appointment Date cannot be in the past&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        this.date = date;</b>
+&nbsp;    }
+&nbsp;
+&nbsp;    /**
+&nbsp;     * Sets the appointment description.
+&nbsp;     *
+&nbsp;     * @param description The description string.
+&nbsp;     * @throws IllegalArgumentException if description is null or exceeds 50 characters.
+&nbsp;     */
+&nbsp;    public void setDescription(String description) {
+<b class="fc">&nbsp;        if (description == null || description.length() &gt; DESCRIPTION_MAX_LENGTH) {</b>
+<b class="fc">&nbsp;            throw new IllegalArgumentException(&quot;Appointment Description cannot be null or more than &quot; + DESCRIPTION_MAX_LENGTH + &quot; characters.&quot;);</b>
+&nbsp;        }
+<b class="fc">&nbsp;        this.description = description;</b>
+&nbsp;    }
+&nbsp;}
+</code>
+</pre>
+</div>
+
+<script type="text/javascript">
+(function() {
+    var msie = false, msie9 = false;
+    /*@cc_on
+      msie = true;
+      @if (@_jscript_version >= 9)
+        msie9 = true;
+      @end
+    @*/
+
+    if (!msie || msie && msie9) {
+      hljs.highlightAll()
+      hljs.initLineNumbersOnLoad();
+    }
+})();
+</script>
+
+<div class="footer">
+    
+    <div style="float:right;">generated on 2026-01-08 05:51</div>
+</div>
+</body>
+</html>
