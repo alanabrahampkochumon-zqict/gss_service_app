@@ -14,7 +14,6 @@ class TaskTest {
     private static final String ID = "001";
     private static final String NAME = "Task Name";
     private static final String DESCRIPTION = "Task Description";
-    
 
     @Nested
     class TaskIDTests {
