@@ -2,7 +2,7 @@
 
 This project was developed as part of **CS320: Software Automation and Testing** at Southern New Hampshire University. The primary goal was to create three specific features, Contact, Appointment, and Task services, along with their corresponding object classes, and to implement rigorous unit testing to ensure functionality and reliability.
 
-This repository specifically showcases the **Contact Service** portion of the project (Project One), demonstrating proficiency in software testing, automation, and quality assurance.
+This repository showcases the full project, demonstrating proficiency in software testing, automation, and quality assurance.
 
 ## Project Details
 
